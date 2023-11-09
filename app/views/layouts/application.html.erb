@@ -9,6 +9,18 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
+  
+  <% if user_signed_in? %>
+    <div class="d-flex justify-content-between">
+      <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-danger mt-1 ms-1"  %>
+      <div class="mt-1 me-1">
+        <p><%= current_user.email %></p>
+      </div>
+    </div>
+  <% end %>
+
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
 
   <body>
     <%= yield %>

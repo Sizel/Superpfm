@@ -23,5 +23,10 @@ module Superpfm
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.hosts << /.*\.github\.dev/
+    config.hosts << /.*\.ngrok-free\.app/
+    config.hosts << "superpfm-production.up.railway.app"
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end

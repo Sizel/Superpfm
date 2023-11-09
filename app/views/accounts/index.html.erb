@@ -1,0 +1,28 @@
+
+<div class="container mx-auto text-center">
+<%= link_to "Back to connections", root_path, class: "btn btn-primary mb-3" %>
+  <h1>Accounts</h1>
+
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th>Account name</th>
+        <th>Balance</th>
+        <th>Currency</th>
+        <th>Nature</th>
+        <th>Transactions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @accounts.each do |account| %>
+        <tr>
+          <td><%= account.name %></td>
+          <td><%= account.balance.to_f.round(2) %></td>
+          <td><%= account.currency_code %></td>
+          <td><%= account.nature %></td>
+          <td><%= link_to account.transactions.size, connection_account_transactions_path(account.connection_id, account), class: "btn btn-link" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

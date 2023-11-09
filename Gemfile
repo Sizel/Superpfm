@@ -5,14 +5,16 @@ ruby "3.2.2"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.1"
 
+# Use thin as a webserver
+gem "thin", "~> 1.8"
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
-# Use sqlite3 as the database for Active Record
-gem "sqlite3", "~> 1.4"
+# Use pg as the database for Active Record
+gem "pg", "~> 1.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", ">= 5.0"
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
@@ -68,4 +70,20 @@ group :test do
   gem "selenium-webdriver"
 end
 
+group :development, :test do
+  gem 'rspec-rails', '~> 6.0.0'
+  gem "factory_bot_rails", "~> 6.2"
+end
+
 gem "devise", "~> 4.9"
+
+gem "rest-client", "~> 2.1"
+
+gem "sidekiq", "~> 7.2"
+
+gem "bootstrap", "~> 5.3"
+
+gem "jquery-rails", "~> 4.6"
+
+gem "dartsass-sprockets", "~> 3.0"
+

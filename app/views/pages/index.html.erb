@@ -1,0 +1,56 @@
+<div class="container mx-auto text-center">
+  <h1 class="mb-4">Welcome to SuperPFM!</h1>
+
+  <% unless user_signed_in? %>
+    <p>You are not signed in.</p>
+    <p><%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary" %></p>
+    <p><%= link_to "Sign in", new_user_session_path, class: "btn btn-secondary" %></p>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <%= button_to "Create new connection", connections_path, method: :post, data: { turbo: false}, class: "btn btn-success mb-3" %>
+
+    <h1>Connections</h1>
+
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th>Connection ID</th>
+          <th>Provider</th>
+          <th>Status</th>
+          <th>Accounts</th>
+          <th>Next refresh possible at</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% current_user.connections.each do |connection| %>
+          <tr>
+            <td><%= link_to connection.connection_id, connection_accounts_path(connection), class: "btn btn-link" %></td>
+            <td><%= connection.provider_code %></td>
+            <td><%= connection.status %></td>
+            <td><%= connection.accounts.size %></td>
+            <td>
+              <% if connection.ready_for_refresh? %>
+                Now
+              <% elsif connection.refreshing? %>
+                Refreshing
+              <% elsif connection.waiting_for_refresh? %>
+                <%= format_next_refresh_date(connection.next_refresh_possible_at) %>
+              <% else %>
+                Not possible
+              <% end %>
+            </td>
+            <% if connection.ready_for_refresh? %>
+              <td><%= button_to "Refresh", refresh_connection_path(connection.connection_id), method: :post, class: "btn btn-info"  %></td>
+            <% end %>
+            <% unless connection.refreshing? %>
+              <td><%= button_to "Reconnect", reconnect_connection_path(connection.connection_id), method: :post, data: { turbo: false }, class: "btn btn-warning"  %></td>
+              <td><%= button_to "Delete", connection_path(connection.connection_id), method: :delete, data: { turbo_confirm: "Are you sure? If you press OK, you might need to refresh this page to see that the connection is indeed deleted" }, class: "btn btn-danger"  %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

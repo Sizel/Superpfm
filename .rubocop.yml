@@ -1,0 +1,8 @@
+# Disabled cops
+Metrics/BlockLength:
+  Enabled: false
+RuboCopStyle/StringLiterals:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 15
